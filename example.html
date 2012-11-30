@@ -1,0 +1,90 @@
+<html>
+    <head>
+		<script src="generate.js"></script>
+		<script>
+			var $ = (function(query){ return document.querySelectorAll(query);});
+			var $event = (function(o, e, f, b){ return o.addEventListener(e, f, b);});
+			var $el = (function(type){ return document.createElement(type);});
+			var $hide = (function(e){ return e.style.display = "none";});
+			var $log = (function(m){ if(typeof(m) == "string"){ return console.log("[Debug]: " + m);}else{ console.log("[Debug]: "); return console.log(m);}});
+			var $ls = localStorage;
+
+			// Add-click -> Todos.add(edit.value), localStorage.add(edit.value)
+			var app = {};
+			app.db = {};
+			app.count = 0;
+			app.db.add = (function(el, id){
+				var db_count = $ls.getItem("db");
+				$ls.setItem("db-count", app.count);
+				$ls.setItem("db-" + id, el.innerHTML);
+			});
+			app.db.remove = (function(e, c){
+				// $ls.setItem("db-" + c, null);
+				$ls.setItem("db-" + e.id.split("-")[2], null);
+			});
+			app.add = (function(input){
+				var el = $el("li");
+				el.id = "todo-elem-" + app.count;
+				el.innerHTML = input.value;
+				input.value = "";
+				input.focus();
+				$("#todos")[0].appendChild(el);
+				$event(el, "click", (function(){ app.remove(el, app.count);}), true);
+				app.count++;
+				app.db.add(el, app.count);
+				$log("Element added, count = " + app.count);
+			});
+			app.remove = (function(el, c){
+				$hide(el);
+				app.db.remove(el, c);
+			});
+			app.compile = (function(){
+				var __dom = generateDom($("#template")[0].innerHTML);
+				var __content = $el("div");
+				__content.id = "content";
+				$("body")[0].appendChild(__content);
+				$("body")[0].innerHTML = __dom.code;
+				eval(__dom.jsCode);
+			});
+			var load = (function(){
+				app.compile();
+				$event($("#todo-edit-button")[0], "click", (function(){ app.add($("#todo-edit-input")[0]);}), true);
+				$event($("#todo-edit-input")[0], "keypress", (function(e){ if(e.keyCode == 13){ app.add($("#todo-edit-input")[0]);}}), true);
+				if($ls.getItem("db-count") != null){
+					var db_count = $ls.getItem("db-count");
+					for(var i = 0; i <= db_count; i++){
+						if($ls.getItem("db-" + i) != "null" & $ls.getItem("db-" + i) != null){
+							var el = $el("li");
+							el.id = "todo-elem-" + i;
+							el.innerHTML = $ls.getItem("db-" + i); 
+							$("#todos")[0].appendChild(el);
+							$event(el, "click", (function(){ app.remove(el, i - 1);}), true);
+						}
+					}
+					app.count = db_count;
+				}else{
+					$ls.setItem("db-count", 0);
+				}
+			});
+		</script>
+	</head>
+<body onload="load();">
+
+</body>
+<script id="template" type="template">
+	div#todolist{
+		div#edit{
+			input#todo-edit-input{
+				type: text;
+			}
+			input#todo-edit-button{
+				type: button;
+				value: Add;
+			}
+		}
+		ul#todos{
+
+		}
+	}
+</script>
+</html>
