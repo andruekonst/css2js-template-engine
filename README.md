@@ -1,55 +1,29 @@
-css2js-template-engine
+CSS2JS-template-engine
 ======================
 
 CSS-styled language compilator written in js
 
+Algorithm:
+----------------------
+Converting css-styled tags to html, adding content, adding childs, generating js to add events, css and additional html parameters
+
 Syntax:
+----------------------
+Tag expression: 
 
-[tag1]<#.>{
+    tag-type#tag-id.tag-class1 tag-class2
 
-  ... <CSS Styles, tag1 parameters> ...
-  
-  content: <Content>;
-  
-  [tag2]<#.>{
-  
-    ... <CSS Styles, tag2 parameters> ...
-    
-    content: <Content>;
-    
-  }
-  
-  content: <Content>;
-  
-}
-
+Content block: content: "content";
 
 Example:
-
-div#test-id.test-class{
-
-  background: black;
-  
-  color: white;
-  
-  content: Input example;
-  
-  input#test-input{
-  
-    type: text;
-    
-    value: Test;
-    
-  }
-  
-  input#test-button{
-  
-    type: button;
-    
-    value: Ok;
-    
-  }
-  
-  content: Press Ok button;
-  
-}
+----------------------
+    div#test-id.test class{
+      content: "Test";
+      div#child.child styled button{
+        onclick: test();
+        a{
+          content: Test Button;
+          href: #;
+        }
+      }
+    }
