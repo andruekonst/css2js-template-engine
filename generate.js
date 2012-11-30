@@ -96,7 +96,8 @@ function generateDom(text_template){
 					code += value;
 				}else{
 					// jsCode += 'elem.' + type.split(/\s/).join("") + ' = "' + value + '";';
-					jsCode += 'elems[elems.length - 1].' + type.split(/\s/).join("") + ' = "' + value + '";';
+					// jsCode += 'elems[elems.length - 1].' + type.split(/\s/).join("") + ' = "' + value + '";';
+					jsCode += 'if(typeof(elems[elems.length - 1].' + type.split(/\s/).join("") + ') != "undefined"){ elems[elems.length - 1].' + type.split(/\s/).join("") + ' = "' + value + '";}else{ elems[elems.length - 1].style.' + type.split(/\s/).join("") + ' = "' + value + '";}';
 				}
 				type = "";
 				value = "";
