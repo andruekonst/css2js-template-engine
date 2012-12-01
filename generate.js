@@ -1,5 +1,5 @@
 function generateDom(text_template){
-    var stack = []; // Â ñòåêå áóäóò õðàíèòüñÿ îáúåêòû {type, value}
+	var stack = []; // Â ñòåêå áóäóò õðàíèòüñÿ îáúåêòû {type, value}
 	var collect = "";
 	var type = "";
 	var value = "";
@@ -10,7 +10,7 @@ function generateDom(text_template){
 	var jsCode = "var elems = [];"; // var jsCode = "";
 	var quote = "";
 	for(var i = 0; i < text.length; i++){
-		if((text[i] != "{") && (text[i] != "}") && (text[i] != ";") && (text[i] != ":")){
+		if((text[i] != "{") && (text[i] != "}") && (text[i] != ";") && (text[i] != ":") || ((quote != "") && ((text[i] == "{") || (text[i] == "}")))){
 			collect += text[i];
 		}else if(text[i] == "{"){
 			stack.push({type: "start", value: collect});
@@ -65,14 +65,16 @@ function generateDom(text_template){
 				blockId = "" + count;
 			}
 			var __tag = collect.split(/[#.=]/)[0].split(/\s/).join("");
-			if((__tag == "div") | (__tag == "span") | (__tag == "ul") | (__tag == "input")){
+			if((__tag == "div") | (__tag == "span") | (__tag == "ul") | (__tag == "input") | (__tag == "a")){
 				code += '<' + __tag + ' id="' + blockId + '"' + ' class="' + blockClass + '"' + '>';
-			}else if(__tag == "a"){
+			}
+			/* else if(__tag == "a"){
 				if(blockEqual == ""){
 					blockEqual = "#" + collect.split(/[#.=]/)[2].split(/\s/).join("");
 				}
 				code += '<' + __tag + ' id="' + blockId + '"' + ' href="' + blockEqual + '"' + ' class="' + blockClass + '"' + '>';
-			}else{
+			} */
+			else{
 				code += '<' + __tag + '>';
 			}
 			// jsCode += 'var elem = document.getElementById("' + blockId + '");';
@@ -87,8 +89,15 @@ function generateDom(text_template){
 			if(quote == ""){
 				value = collect;
 				if(value[0] == " "){
-					value = value.split(/\s/).join("");
+					// value = value.split(/\s/).join("");
+					value = value.substr(1);
 				}
+				if(((value[0] == '"') & (value[value.length - 1] == '"')) | ((value[0] == "'") & (value[value.length - 1] == "'"))){
+					value = value.substr(1);
+					value = value.substring(0, value.length - 1);
+				}
+				value = value.replace(/\\n/, "\n");
+				value = value.replace(/\\br/, "\n<br />");
 				stack.push({type: type, value: value});
 				stack.push({type: "end", value: ";"});
 				if(type.split(/\s/).join("") == "content"){
