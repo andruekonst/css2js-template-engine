@@ -1,5 +1,6 @@
 function generateDom(text_template){
 	var stack = []; // Â ñòåêå áóäóò õðàíèòüñÿ îáúåêòû {type, value}
+	// TODO: remove stack
 	var collect = "";
 	var type = "";
 	var value = "";
