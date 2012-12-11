@@ -1,5 +1,5 @@
 function generateDom(text_template){
-  var stack = [];
+	var stack = [];
 	var collect = "";
 	var type = "";
 	var value = "";
@@ -8,8 +8,10 @@ function generateDom(text_template){
 	var code = "";
 	var count = 0;
 	var jsCode = "var elems = [];"; // var jsCode = "";
-	var htmlProperties = ["href", "width", "height", "type", "value", "name", "onclick"];
-	var cssProperties = ["position", "left", "top", "width", "height", "background", "color"];
+	// var htmlProperties = ["href", "width", "height", "type", "value", "name", "onclick"];
+	var htmlProperties = ["accesskey", "href", "name", "tabindex", "target", "alt", "coords", "href", "shape", "tabindex", "size", "alink", "link", "vlink", "background", "bgcolor", "bgproperties", "bottommargin", "leftmargin", "marginheight", "marginwidth", "rightmargin", "text", "topmargin", "clear", "align", "align", "bgcolor", "char", "span", "valign", "align", "bgcolor", "char", "span", "valign", "class", "color", "face", "size", "accept-charset", "action", "enctype", "method", "target", "bordercolor", "frameborder", "marginheight", "marginwidth", "name", "noresize", "scrolling", "src", "border", "bordercolor", "cols", "frameborder", "framespacing", "rows", "align", "align", "noshade", "size", "width", "align", "alt", "border", "dynsrc", "height", "width", "hspace", "vspace", "ismap", "lowsrc", "name", "src", "tabindex", "usemap", "height", "width", "left", "top", "z-index", "type", "value", "href", "rel", "type", "name", "behavior", "bgcolor", "direction", "height", "width", "hspace", "vspace", "loop", "scrollamount", "scrolldelay", "truespeed", "start", "type", "align", "align", "height", "width", "type", "align", "background", "bgcolor", "border", "bordercolor", "cellpadding", "callspacing", "frame", "height", "width", "rules", "align", "bgcolor", "char", "valign", "align", "background", "bgcolor", "char", "colspan", "height", "width", "nowrap", "rowspan", "valign", "align", "bgcolor", "char", "valign", "align", "bgcolor", "char", "valign", "align", "bgcolor", "char", "valign", "type"];
+	// var cssProperties = ["position", "left", "top", "width", "height", "background", "color"];
+	var cssProperties = ["background", "background-attachment", "background-color", "background-image", "background-position", "background-repeat", "border", "border-collapse", "border-color", "border-spacing", "border-style", "border-width", "bottom", "caption-side", "clear", "color", "cursor", "direction", "display", "empty-cells", "float", "font", "font-family", "font-size", "fony-style", "font-variant", "font-weight", "height", "left", "letter-spacing", "line-height", "list-style", "list-style-image", "list-style-position", "list-style-type", "margin", "max-height", "max-width", "min-height", "min-width", "overflow", "padding", "position", "right", "table-layout", "text-align", "text-decoration", "text-indent", "text-transform", "top", "vertical-align", "visibility", "white-space", "width", "word-spacing", "z-index"];
 	var closen = 0;
 	var quote = "";
 	for(var i = 0; i < text.length; i++){
