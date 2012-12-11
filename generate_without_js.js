@@ -147,6 +147,7 @@ function generateDom(text_template){
 					// code += value.split(/[']/).split(/["]/).join("");
 					// code += value;
 					blocks[blocks.length - 1].cC += value;
+					blocks[blocks.length - 1].cS += " ";
 				}else{
 					// jsCode += 'elem.' + type.split(/\s/).join("") + ' = "' + value + '";';
 					// jsCode += 'elems[elems.length - 1].' + type.split(/\s/).join("") + ' = "' + value + '";';
